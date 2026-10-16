@@ -33,3 +33,6 @@ class Booking(db.Model):
     class_id  = db.Column(db.Integer, db.ForeignKey("gym_class.id"), nullable=False)
 
     member = db.relationship("Member")
+
+    # The same UNIQUE as in ddl.sql: one spot per member per class
+    __table_args__ = (db.UniqueConstraint("member_id", "class_id"),)
