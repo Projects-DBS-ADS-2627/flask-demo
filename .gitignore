@@ -1,0 +1,16 @@
+# Your virtual environment and compiled files belong to your machine
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Local databases change on every run
+instance/
+*.sqlite
+
+# Your database password. Never in Git.
+.env
+
+# Editor and operating system files
+.idea/
+.DS_Store

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Not found{% endblock %}
+
+{% block content %}
+  <h1>This page does not exist</h1>
+  <p>The link is wrong, or what it pointed to has been removed.</p>
+  <p><a href="{{ url_for('main.home') }}">Back to the start page</a></p>
+{% endblock %}
