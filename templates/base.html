@@ -3,15 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Our MVP{% endblock %}</title>
+  <title>{% block title %}Class bookings{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 <body>
   <nav class="navbar navbar-expand bg-body-tertiary mb-4">
     <div class="container">
-      <a class="navbar-brand" href="{{ url_for('main.home') }}">Our MVP</a>
-      {# your menu: one <a class="nav-link"> per page #}
+      <a class="navbar-brand" href="{{ url_for('main.home') }}">Class bookings</a>
+      <div class="navbar-nav">
+        <a class="nav-link" href="{{ url_for('classes.class_list') }}">Classes</a>
+      </div>
     </div>
   </nav>
 

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Classes{% endblock %}
+
+{% block content %}
+  <h1>Classes this week</h1>
+
+  <table>
+  {% for c in classes %}
+    <tr>
+      <td>{{ c.name }}</td>
+      <td>{{ c.starts_at.strftime("%d/%m %H:%M") }}</td>
+      <td>{{ c.capacity - c.bookings|length }} free</td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}
