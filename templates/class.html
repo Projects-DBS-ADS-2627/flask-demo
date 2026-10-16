@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}{{ gym_class.name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ gym_class.name }}</h1>
+  <p>{{ gym_class.starts_at.strftime("%A %d/%m at %H:%M") }},
+     {{ gym_class.capacity - gym_class.bookings|length }} of {{ gym_class.capacity }} spots free.</p>
+
+  <h2>Booked</h2>
+  <ul>
+  {% for booking in gym_class.bookings %}
+    <li>{{ booking.member.name }}</li>
+  {% endfor %}
+  </ul>
+
+  <p><a href="{{ url_for('classes.class_list') }}">Back to all classes</a></p>
+{% endblock %}

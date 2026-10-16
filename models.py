@@ -9,11 +9,27 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-# An example of what a class looks like. Replace it with your own tables.
-#
-# class Listing(db.Model):
-#     __tablename__ = "listing"
-#     id          = db.Column(db.Integer, primary_key=True)
-#     title       = db.Column(db.String(120), nullable=False)
-#     price       = db.Column(db.Numeric(8, 2), nullable=False)
-#     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
+class Member(db.Model):
+    __tablename__ = "member"
+    id   = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+
+
+class GymClass(db.Model):
+    __tablename__ = "gym_class"
+    id        = db.Column(db.Integer, primary_key=True)
+    name      = db.Column(db.String(80), nullable=False)
+    starts_at = db.Column(db.DateTime, nullable=False)
+    capacity  = db.Column(db.Integer, nullable=False)
+
+    # Not a column: lets you write gym_class.bookings instead of a second query
+    bookings = db.relationship("Booking", backref="gym_class")
+
+
+class Booking(db.Model):
+    __tablename__ = "booking"
+    id        = db.Column(db.Integer, primary_key=True)
+    member_id = db.Column(db.Integer, db.ForeignKey("member.id"), nullable=False)
+    class_id  = db.Column(db.Integer, db.ForeignKey("gym_class.id"), nullable=False)
+
+    member = db.relationship("Member")

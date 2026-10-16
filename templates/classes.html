@@ -8,7 +8,7 @@
   <table>
   {% for c in classes %}
     <tr>
-      <td>{{ c.name }}</td>
+      <td><a href="{{ url_for('classes.class_detail', class_id=c.id) }}">{{ c.name }}</a></td>
       <td>{{ c.starts_at.strftime("%d/%m %H:%M") }}</td>
       <td>{{ c.capacity - c.bookings|length }} free</td>
     </tr>
