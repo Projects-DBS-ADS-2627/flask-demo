@@ -3,26 +3,50 @@
 {% block title %}{{ gym_class.name }}{% endblock %}
 
 {% block content %}
+  {% set free = gym_class.capacity - gym_class.bookings|length %}
+
   <h1>{{ gym_class.name }}</h1>
-  <p>{{ gym_class.starts_at.strftime("%A %d/%m at %H:%M") }},
-     {{ gym_class.capacity - gym_class.bookings|length }} of {{ gym_class.capacity }} spots free.</p>
+  <p class="lead">{{ gym_class.starts_at.strftime("%A %d/%m at %H:%M") }},
+     {{ free }} of {{ gym_class.capacity }} spots free.</p>
 
-  <h2>Book a spot</h2>
-  <form method="post" action="{{ url_for('classes.book', class_id=gym_class.id) }}">
-    <select name="member_id">
-    {% for m in members %}
-      <option value="{{ m.id }}">{{ m.name }}</option>
-    {% endfor %}
-    </select>
-    <button>Book a spot</button>
-  </form>
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="h5 card-title">Book a spot</h2>
+          {% if free > 0 %}
+            <form method="post" action="{{ url_for('classes.book', class_id=gym_class.id) }}">
+              <select name="member_id" class="form-select mb-3">
+              {% for m in members %}
+                <option value="{{ m.id }}">{{ m.name }}</option>
+              {% endfor %}
+              </select>
+              <button class="btn btn-primary">Book a spot</button>
+            </form>
+          {% else %}
+            <p class="mb-0">This class is full.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
 
-  <h2>Booked</h2>
-  <ul>
-  {% for booking in gym_class.bookings %}
-    <li>{{ booking.member.name }}</li>
-  {% endfor %}
-  </ul>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="h5 card-title">Booked</h2>
+          {% if gym_class.bookings %}
+            <ul class="mb-0">
+            {% for booking in gym_class.bookings %}
+              <li>{{ booking.member.name }}</li>
+            {% endfor %}
+            </ul>
+          {% else %}
+            <p class="mb-0 text-body-secondary">Nobody yet. Be the first.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <p><a href="{{ url_for('classes.class_list') }}">Back to all classes</a></p>
+  <p class="mt-4"><a href="{{ url_for('classes.class_list') }}">Back to all classes</a></p>
 {% endblock %}
